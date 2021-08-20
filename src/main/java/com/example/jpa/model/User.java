@@ -1,5 +1,9 @@
 package com.example.jpa.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,7 +11,7 @@ import javax.persistence.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column(name = "first_name")
@@ -19,22 +23,23 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    private String password;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL,mappedBy ="user")
+    @OneToOne(targetEntity = UserProfile.class,cascade=CascadeType.ALL)
+
+//    @JoinColumn(name = "User_Profile_id")
     private UserProfile userprofile;
 
-    //Constructor
+
     public User() {
 
     }
 
-    public User(String firstName, String lastName, String email, String password) {
-
-        this.firstName= firstName;
-        this.lastName=lastName;
-        this.email=email;
-        this.password=password;
+    public User(long id, String firstName, String lastName, String email, UserProfile userprofile) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.userprofile = userprofile;
     }
 
     public long getId() {
@@ -69,13 +74,6 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public UserProfile getUserprofile() {
         return userprofile;

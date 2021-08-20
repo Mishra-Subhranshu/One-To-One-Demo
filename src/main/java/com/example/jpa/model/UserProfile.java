@@ -1,5 +1,8 @@
 package com.example.jpa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -7,41 +10,39 @@ import java.util.Date;
 @Table(name = "user_profiles")
 public class UserProfile {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
-
     @Column(name = "dob")
     private String dateOfBirth;
-    private String address1;
-    private String address2;
-    private String country;
+    private String address;
 
-    @Column(name="zip_code")
-    private String zipCode;
-
-    @OneToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name="user_id", nullable = false)
+    @JsonIgnore
+    @OneToOne(targetEntity = User.class, mappedBy = "userprofile")
+    //@JoinColumn(name="user_id")
     private User user;
 
     public UserProfile() {
 
     }
 
-    public UserProfile(String phoneNumber, Gender gender,String dateOfBirth,String address1,String address2,
-                       String country,String zipCode) {
+    public UserProfile(long id, String phoneNumber, String dateOfBirth, String address, User user) {
+        this.id = id;
         this.phoneNumber = phoneNumber;
-        this.gender=gender;
-        this.dateOfBirth=dateOfBirth;
-        this.address1=address1;
-        this.address2=address1;
-        this.country=country;
-        this.zipCode=zipCode;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public long getId() {
@@ -60,12 +61,12 @@ public class UserProfile {
         this.phoneNumber = phoneNumber;
     }
 
-    public Gender getGender() {
-        return gender;
+    public String getAddress() {
+        return address;
     }
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getDateOfBirth() {
@@ -76,43 +77,11 @@ public class UserProfile {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getAddress1() {
-        return address1;
-    }
 
-    public void setAddress1(String address1) {
-        this.address1 = address1;
-    }
 
-    public String getAddress2() {
-        return address2;
-    }
 
-    public void setAddress2(String address2) {
-        this.address2 = address2;
-    }
 
-    public String getCountry() {
-        return country;
-    }
 
-    public void setCountry(String country) {
-        this.country = country;
-    }
 
-    public String getZipCode() {
-        return zipCode;
-    }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
