@@ -1,5 +1,6 @@
 package com.example.jpa.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -20,7 +21,8 @@ public class UserProfile {
     private String dateOfBirth;
     private String address;
 
-    @JsonIgnore
+    //@JsonIgnore
+    @JsonBackReference
     @OneToOne(targetEntity = User.class, mappedBy = "userprofile")
     //@JoinColumn(name="user_id")
     private User user;
