@@ -20,12 +20,12 @@ public class User {
     @Column(name = "lastName")
     private String lastName;
 
-    @Column(unique = true)
+    @Column(name = "email")
     private String email;
 
-
-    @OneToOne(targetEntity = UserProfile.class,cascade=CascadeType.ALL)
-
+    @JsonBackReference
+    @OneToOne(cascade = CascadeType.ALL, targetEntity = UserProfile.class)
+    //@OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
 //    @JoinColumn(name = "User_Profile_id")
     private UserProfile userprofile;
 

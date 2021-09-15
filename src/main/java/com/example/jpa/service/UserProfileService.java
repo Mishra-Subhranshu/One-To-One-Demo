@@ -5,11 +5,12 @@ import com.example.jpa.model.UserProfile;
 import com.example.jpa.repository.UserProfileRepository;
 import com.example.jpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Component
 public class UserProfileService {
     @Autowired
     UserProfileRepository userProfileRepository;

@@ -22,8 +22,10 @@ public class UserProfile {
     private String address;
 
     //@JsonIgnore
-    @JsonBackReference
-    @OneToOne(targetEntity = User.class, mappedBy = "userprofile")
+
+    @JsonManagedReference
+    @OneToOne( mappedBy = "userprofile",cascade = CascadeType.ALL)
+//    @OneToOne(cascade = CascadeType.ALL)
     //@JoinColumn(name="user_id")
     private User user;
 

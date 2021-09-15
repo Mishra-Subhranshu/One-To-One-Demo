@@ -62,4 +62,11 @@ public class UserController {
                     return userProfileRepository.save(userProfile);
                 });
     }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteEmployee(@PathVariable long id) {
+         userRepository.deleteById(id);
+        return "deleted successfully "+id;
+
+    }
 }
